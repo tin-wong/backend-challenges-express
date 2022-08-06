@@ -3,6 +3,7 @@ let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
 
+// Implement a Root-Level Request Logger Middleware
 app.use((req, res, next) => {
     console.log(req.method + " " + req.path + " - " + req.ip);
     next();
@@ -13,6 +14,7 @@ app.use("/public", express.static(__dirname + "/public"));
 
 // Use body-parser to Parse POST Requests
 app.use(bodyParser.urlencoded({extended: false}));
+// This allow parsing JSON data sent in the POST request
 app.use(bodyParser.json());
 
 // Serve an HTML File
@@ -47,41 +49,9 @@ app.get('/:word/echo', (req, res, next) => {
 // Get Query Parameter Input from the Client
 app.get('/name', (req, res, next) => {
     res.json({name: req.query.first + " " + req.query.last});
+    // Get Data from POST Requests
 }).post('/name', (req, res, next) => {
     res.json({name: req.body.first + " " + req.body.last})
 })
-    
-
-// Get Data from POST Requests
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
  module.exports = app;
