@@ -43,7 +43,6 @@ app.get('/now', (req, res, next) => {
 // Get Route Parameter Input from the Client
 app.get('/:word/echo', (req, res, next) => {
     res.json({echo: req.params.word});
-    next();
 })
 
 // Get Query Parameter Input from the Client
