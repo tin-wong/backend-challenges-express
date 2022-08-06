@@ -7,17 +7,22 @@ app.use((req, res, next) => {
     console.log(req.method + " " + req.path + " - " + req.ip);
     next();
 })
-app.use(express.static(__dirname + "/public"));
+
+// Serve Static Assets at /public/style.css
 app.use("/public", express.static(__dirname + "/public"));
 
+// Use body-parser to Parse POST Requests
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+// Serve an HTML File
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/views/index.html');
 })
 
+// Serve JSON on a Specific Route
 app.get('/json', (req, res) => {
+    // Use the .env File
     if(process.env.MESSAGE_STYLE === "uppercase"){
         res.json({message: "HELLO JSON"});
     } else {
@@ -40,11 +45,14 @@ app.get('/:word/echo', (req, res, next) => {
 })
 
 // Get Query Parameter Input from the Client
-app.get('/name', (req, res) => {
+app.get('/name', (req, res, next) => {
     res.json({name: req.query.first + " " + req.query.last});
-    next();
+}).post('/name', (req, res, next) => {
+    res.json({name: req.body.first + " " + req.body.last})
 })
+    
 
+// Get Data from POST Requests
 
 
 
